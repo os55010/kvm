@@ -1,0 +1,24 @@
+---
+
+- name: install packages
+  yum:
+    name: "{ item }"
+    state: present
+  with_items:
+    - bind-utils
+    - ntp
+
+- name: create user
+  user:
+    name: "{{ kvm_user }}"
+    groups: adm
+    shell: /bin/bash
+
+- name: ensure .ssh exists
+  file:
+    path: "/home/{{ kvm_user }}/.ssh"
+    state: directory
+    owner: "{{ kvm_user }}"
+    group: "{{ kvm_user }}"
+
+- name: configure sudo
