@@ -5,8 +5,8 @@
   with_items:
     - libvirt
     - qemu-kvm
-    - bridge-utils
-    - libvirt-python
+    - qemu-img
+    - virt-install
 
 - name: download
   get_url:
