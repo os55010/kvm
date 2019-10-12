@@ -1,24 +1,15 @@
----
-
 - name: install packages
-  yum:
-    name: "{ item }"
+  yum: 
+    name: "{{ item }}"
     state: present
   with_items:
-    - bind-utils
-    - ntp
+    - libvirt
+    - qemu-kvm
+    - bridge-utils
+    - libvirt-python
 
-- name: create user
-  user:
-    name: "{{ kvm_user }}"
-    groups: adm
-    shell: /bin/bash
+- name: download
+  get_url:
+    url: http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso
+    dest: /home/{{ user }}/centos7.iso
 
-- name: ensure .ssh exists
-  file:
-    path: "/home/{{ kvm_user }}/.ssh"
-    state: directory
-    owner: "{{ kvm_user }}"
-    group: "{{ kvm_user }}"
-
-- name: configure sudo
